@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="text-4xl font-black mb-10 text-center uppercase tracking-wide">Latest Drops</h1>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    
+    <div class="bg-white p-5 rounded-xl shadow-md hover:shadow-2xl transition-all duration-300">
+        <div class="bg-gray-200 h-72 rounded-lg mb-5 flex items-center justify-center border border-gray-300">
+            <span class="text-gray-500 font-bold">[Image: Argentina 3-Star Home Kit]</span>
+        </div>
+        <h2 class="text-2xl font-bold uppercase">Argentina National Team</h2>
+        <p class="text-gray-500 font-medium">Authentic Match Jersey</p>
+        <div class="mt-5 flex justify-between items-center">
+            <span class="font-black text-xl">$120.00</span>
+            <button class="bg-black text-white px-5 py-2 rounded font-bold hover:bg-gray-800 transition">Add to Cart</button>
+        </div>
+    </div>
+
+    <div class="bg-white p-5 rounded-xl shadow-md hover:shadow-2xl transition-all duration-300">
+        <div class="bg-gray-200 h-72 rounded-lg mb-5 flex items-center justify-center border border-gray-300">
+            <span class="text-gray-500 font-bold">[Image: MBSG Home Kit]</span>
+        </div>
+        <h2 class="text-2xl font-bold uppercase">Mohun Bagan Super Giant</h2>
+        <p class="text-gray-500 font-medium">Home Kit</p>
+        <div class="mt-5 flex justify-between items-center">
+            <span class="font-black text-xl">$90.00</span>
+            <button class="bg-black text-white px-5 py-2 rounded font-bold hover:bg-gray-800 transition">Add to Cart</button>
+        </div>
+    </div>
+    
+    {% for jersey in jerseys %}
+    <div class="bg-white p-5 rounded-xl shadow-md hover:shadow-2xl transition-all duration-300">
+        <div class="h-72 rounded-lg mb-5 flex items-center justify-center overflow-hidden bg-gray-100">
+   <img src="{{ url_for('static', filename='images/' + jersey.image_file) }}" 
+     alt="{{ jersey.name }}" 
+     onerror="this.onerror=null;this.src='/static/images/mbsg.png';">
+</div>
+        <h2 class="text-2xl font-bold uppercase">{{ jersey.name }}</h2>
+        <p class="text-gray-500 font-medium">{{ jersey.description }}</p>
+        <div class="mt-5 flex justify-between items-center">
+            <span class="font-black text-xl">${{ jersey.price }}</span>
+            
+            <form action="{{ url_for('store.add_to_cart', jersey_id=jersey.id) }}" method="POST">
+                <button type="submit" class="bg-black text-white px-5 py-2 rounded font-bold hover:bg-gray-800 transition">Add to Cart</button>
+            </form>
+            
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+{% endblock %}
